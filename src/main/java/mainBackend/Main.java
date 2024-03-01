@@ -1,6 +1,6 @@
 package mainBackend;
 
-public class MainControllerBack {
+public class Main{
 
     public static void main(String[] args) {
     }
