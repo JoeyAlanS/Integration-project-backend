@@ -1,4 +1,4 @@
-package mainBackend;
+package controller;
 
 public class Main{
 
