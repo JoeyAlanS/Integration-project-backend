@@ -38,7 +38,7 @@ public class ModelController {
 
     @PostMapping("/model")
     @ResponseBody
-    @ApiOperation(value = "Return model")
+    @ApiOperation(value = "Add Model")
     public ModelEntity postModelEntity(@RequestBody ModelEntity modelEntity) {
         return modelRepository.save(modelEntity);
     }

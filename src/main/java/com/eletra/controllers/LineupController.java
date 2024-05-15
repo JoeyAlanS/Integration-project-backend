@@ -33,7 +33,7 @@ public class LineupController {
 
     @PostMapping("/line")
     @ResponseBody
-    @ApiOperation(value = "Return line")
+    @ApiOperation(value = "Add Member to Lineup")
     public LineupEntity postLineupEntity(@RequestBody LineupEntity lineupEntity) {
         return lineupRepository.save(lineupEntity);
     }

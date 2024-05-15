@@ -40,7 +40,7 @@ public class CategoryController {
 
     @PostMapping("/category")
     @ResponseBody
-    @ApiOperation(value = "Return category")
+    @ApiOperation(value = "Create Category")
     public CategoryEntity postCategoryEntity(@RequestBody CategoryEntity categoryEntity) {
         return categoryRepository.save(categoryEntity);
     }
