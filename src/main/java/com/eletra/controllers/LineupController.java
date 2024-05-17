@@ -1,10 +1,13 @@
 package com.eletra.controllers;
 
+import com.eletra.models.CategoryEntity;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.eletra.models.LineupEntity;
 import com.eletra.repositories.LineupRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,17 +44,20 @@ public class LineupController {
     @DeleteMapping("/line/{line-name}")
     @ResponseBody
     @ApiOperation(value = "Delete line")
-    public String deleteLineupEntity(@PathVariable(value = "line-name") String lineName) {
+    public ResponseEntity<Boolean> deleteLineupEntity(@PathVariable(value = "line-name") String lineName) {
         LineupEntity lineupEntity = lineupRepository.findByLineName(lineName);
-        lineupRepository.delete(lineupEntity);
-        return "Line deleted";
+        if (lineupEntity != null) {
+            lineupRepository.delete(lineupEntity);
+            boolean exists = lineupRepository.findByLineName(lineName) != null;
+            return ResponseEntity.ok(!exists);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
     }
 
     @PutMapping("/line")
     @ResponseBody
     @ApiOperation(value = "Update line")
-    public String updateLineEntity(@RequestBody LineupEntity lineupEntity) {
-        lineupRepository.save(lineupEntity);
-        return "Line updated";
+    public LineupEntity updateLineupyEntity(@RequestBody LineupEntity lineupEntity) {
+        return lineupRepository.save(lineupEntity);
     }
 }

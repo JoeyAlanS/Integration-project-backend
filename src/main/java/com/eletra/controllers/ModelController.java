@@ -1,11 +1,14 @@
 package com.eletra.controllers;
 
+import com.eletra.models.CategoryEntity;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.eletra.services.ModelService;
 import com.eletra.models.ModelEntity;
 import com.eletra.repositories.ModelRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,10 +33,9 @@ public class ModelController {
 
     @GetMapping("/models/{category-name}")
     @ResponseBody
-    @ApiOperation(value = "Return a model")
-    public List<ModelEntity> getModelEntity(@PathVariable(value = "category-name") String categoryName) {
-        List<ModelEntity> list = modelService.getModelNameByCategoryName(categoryName);
-        return list;
+    @ApiOperation(value = "Return models by category")
+    public List<ModelEntity> getModelEntityByCategory(@PathVariable(value = "category-name") String categoryName) {
+        return modelService.getModelNameByCategoryName(categoryName);
     }
 
     @PostMapping("/model")
@@ -46,17 +48,19 @@ public class ModelController {
     @DeleteMapping("/model/{model-name}")
     @ResponseBody
     @ApiOperation(value = "Delete model")
-    public String deleteModelEntity(@PathVariable(value = "model-name") String modelName) {
+    public ResponseEntity<Boolean> deleteModelEntity(@PathVariable(value = "model-name") String modelName) {
         ModelEntity modelEntity = modelRepository.findByModelName(modelName);
-        modelRepository.delete(modelEntity);
-        return "Model deleted";
+        if (modelEntity != null) {
+            modelRepository.delete(modelEntity);
+            return ResponseEntity.ok(true);
+        }
+        return ResponseEntity.ok(false);
     }
 
     @PutMapping("/model")
     @ResponseBody
     @ApiOperation(value = "Update model")
-    public String updateModelEntity(@RequestBody ModelEntity modelEntity) {
-        modelRepository.save(modelEntity);
-        return "Model updated";
+    public ModelEntity updateModelEntity(@RequestBody ModelEntity modelEntity) {
+        return modelRepository.save(modelEntity);
     }
 }

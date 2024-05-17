@@ -2,13 +2,14 @@ package com.eletra.controllers;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.eletra.repositories.CategoryRepository;
 import com.eletra.models.CategoryEntity;
 import com.eletra.services.CategoryService;
 import org.springframework.web.bind.annotation.*;
-
 
 import java.util.List;
 
@@ -34,8 +35,7 @@ public class CategoryController {
     @ResponseBody
     @ApiOperation(value = "Return category")
     public List<CategoryEntity> getCategoriesByLine(@PathVariable(value = "line-name") String lineName) {
-        List<CategoryEntity> list = categoryService.getCategoriesByLineName(lineName);
-        return list;
+        return categoryService.getCategoriesByLineName(lineName);
     }
 
     @PostMapping("/category")
@@ -48,17 +48,20 @@ public class CategoryController {
     @DeleteMapping("/category/{category-name}")
     @ResponseBody
     @ApiOperation(value = "Delete category")
-    public String deleteCategoryEntity(@PathVariable(value = "category-name") String categoryName) {
+    public ResponseEntity<Boolean> deleteCategoryEntity(@PathVariable(value = "category-name") String categoryName) {
         CategoryEntity categoryEntity = categoryRepository.findByCategoryName(categoryName);
-        categoryRepository.delete(categoryEntity);
-        return "Category deleted";
+        if (categoryEntity != null) {
+            categoryRepository.delete(categoryEntity);
+            boolean exists = categoryRepository.findByCategoryName(categoryName) != null;
+            return ResponseEntity.ok(!exists);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
     }
 
     @PutMapping("/category")
     @ResponseBody
     @ApiOperation(value = "Update category")
-    public String updateCategoryEntity(@RequestBody CategoryEntity categoryEntity) {
-        categoryRepository.save(categoryEntity);
-        return "Category updated";
+    public CategoryEntity updateCategoryEntity(@RequestBody CategoryEntity categoryEntity) {
+        return categoryRepository.save(categoryEntity);
     }
 }
