@@ -15,8 +15,8 @@
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
 
-        <mapping class="model.LineupEntity"/>
-        <mapping class="model.CategoryEntity"/>
-        <mapping class="model.ModelEntity"/>
+        <mapping class="com.eletra.models.LineupEntity"/>
+        <mapping class="com.eletra.models.CategoryEntity"/>
+        <mapping class="com.eletra.models.ModelEntity"/>
     </session-factory>
 </hibernate-configuration>

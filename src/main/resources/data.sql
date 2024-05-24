@@ -3,57 +3,55 @@ DROP TABLE IF EXISTS category;
 DROP TABLE IF EXISTS linesup;
 
 CREATE TABLE linesup (
-                         nameid text NOT NULL,
-                         PRIMARY KEY(nameid)
+                         id SMALLSERIAL NOT NULL ,
+                         name text NOT NULL,
+                         PRIMARY KEY(id)
 );
 
 CREATE TABLE category (
-                          nameid text NOT NULL,
-                          line_id text,
-                          PRIMARY KEY(nameid),
-                          FOREIGN KEY(line_id)
-                              REFERENCES linesup (nameid)
-                              ON DELETE CASCADE
+                          id SMALLSERIAL NOT NULL,
+                          name TEXT NOT NULL,
+                          line_id SMALLINT,
+                          PRIMARY KEY(id),
+                          FOREIGN KEY(line_id) REFERENCES linesup (id) ON DELETE CASCADE
 );
 
 CREATE TABLE models (
-                        nameid text NOT NULL,
-                        category_id text,
-                        PRIMARY KEY(nameid),
-                        FOREIGN KEY(category_id)
-                            REFERENCES category (nameid)
-                            ON DELETE CASCADE
+                        id SMALLSERIAL NOT NULL,
+                        name TEXT NOT NULL,
+                        category_id SMALLINT,
+                        PRIMARY KEY(id),
+                        FOREIGN KEY(category_id) REFERENCES category (id) ON DELETE CASCADE
 );
 
-INSERT INTO linesup (nameid)
+INSERT INTO linesup (name)
 VALUES
     ('Ares'),
     ('Cronos');
 
-INSERT INTO category (line_id, nameid)
+INSERT INTO category (line_id, name)
 VALUES
-    ('Cronos', 'Cronos Old'),
-    ('Cronos', 'Cronos L'),
-    ('Cronos', 'Cronos NG'),
-    ('Ares',   'Ares TB'),
-    ('Ares',   'Ares THS');
-
-INSERT INTO models (category_id, nameid)
+    (2, 'Cronos Old'),
+    (2, 'Cronos L'),
+    (2, 'Cronos NG'),
+    (1, 'Ares TB'),
+    (1, 'Ares THS');
+INSERT INTO models (category_id, name)
 VALUES
-    ('Cronos Old', 'Cronos 6001-A'),
-    ('Cronos Old', 'Cronos 6003'),
-    ('Cronos Old', 'Cronos 7023'),
-    ('Cronos L',   'Cronos 6021L'),
-    ('Cronos L',   'Cronos 7023L'),
-    ('Cronos NG',  'Cronos 6001-NG'),
-    ('Cronos NG',  'Cronos 6003-NG'),
-    ('Cronos NG',  'Cronos 6021-NG'),
-    ('Cronos NG',  'Cronos 6031-NG'),
-    ('Cronos NG',  'Cronos 7021-NG'),
-    ('Cronos NG',  'Cronos 7023-NG'),
-    ('Ares TB',    'Ares 7021'),
-    ('Ares TB',    'Ares 7031'),
-    ('Ares TB',    'Ares 7023'),
-    ('Ares THS',   'Ares 8023 15'),
-    ('Ares THS',   'Ares 8023 200'),
-    ('Ares THS',   'Ares 8023 2,5');
+    (1,'Cronos 6001-A'),
+    (1, 'Cronos 6003'),
+    (1, 'Cronos 7023'),
+    (2, 'Cronos 6021L'),
+    (2, 'Cronos 7023L'),
+    (3, 'Cronos 6001-NG'),
+    (3, 'Cronos 6003-NG'),
+    (3, 'Cronos 6021-NG'),
+    (3, 'Cronos 6031-NG'),
+    (3, 'Cronos 7021-NG'),
+    (3, 'Cronos 7023-NG'),
+    (4, 'Ares 7021'),
+    (4, 'Ares 7031'),
+    (4, 'Ares 7023'),
+    (5, 'Ares 8023 15'),
+    (5, 'Ares 8023 200'),
+    (5, 'Ares 8023 2,5');
