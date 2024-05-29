@@ -1,0 +1,31 @@
+stages:
+    - clean
+    - package
+    - run
+
+clean:
+    stage: clean
+    script:
+        - mvn clean
+    tags: 
+        - Shell-Maven
+
+package:
+    tags:
+        - Shell-Maven
+    stage: package
+    script:
+        - mvn package
+    artifacts:
+        name: jarpath
+        paths:
+         - .\target\Integration-Project-Backend-1.0-SNAPSHOT.jar
+
+run:
+  tags:
+    - Shell-Maven
+  stage: run
+  script:
+    - dir target
+    - java -jar target/Integration-Project-Backend-1.0-SNAPSHOT.jar
+    - Write-Output "Is running!"
