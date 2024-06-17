@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,88 +23,90 @@ import static org.mockito.Mockito.*;
 class ModelControllerTest {
 
     @InjectMocks
-    private ModelController controller;
+    private ModelController modelController;
 
     @Mock
-    private ModelRepository repository;
+    private ModelRepository mockModelRepository;
 
     @Mock
-    private ModelService service;
+    private ModelService mockModelService;
+
+    private CategoryEntity category;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
+        category = new CategoryEntity("Category1", (short) 1);
     }
 
     @Test
-    void getModelEntityList() {
+    void getModelEntityListTest() {
         List<ModelEntity> mockModelList = new ArrayList<>();
-        mockModelList.add(new ModelEntity("Model1", (short) 1));
-        mockModelList.add(new ModelEntity("Model2", (short) 2));
+        mockModelList.add(new ModelEntity(category, "Model1", (short) 1));
+        mockModelList.add(new ModelEntity(category, "Model2", (short) 2));
 
-        when(repository.findAll()).thenReturn(mockModelList);
+        when(mockModelRepository.findAll()).thenReturn(mockModelList);
 
-        List<ModelEntity> result = controller.getModelEntityList();
+        List<ModelEntity> result = modelController.getModelEntityList();
 
         assertEquals(mockModelList, result);
-        verify(repository).findAll();
-        verifyNoMoreInteractions(repository);
+        verify(mockModelRepository).findAll();
+        verifyNoMoreInteractions(mockModelRepository);
     }
 
     @Test
-    void getModelEntityByCategory() {
+    void getModelEntityListByLineNameTest() {
         List<ModelEntity> mockModelList = new ArrayList<>();
-        mockModelList.add(new ModelEntity("Model1", (short) 1));
-        mockModelList.add(new ModelEntity("Model2", (short) 2));
-        CategoryEntity category = new CategoryEntity("Category1", (short) 1);
+        mockModelList.add(new ModelEntity(category, "Model1", (short) 1));
+        mockModelList.add(new ModelEntity(category, "Model2", (short) 2));
 
-        when(service.getModelNameByCategoryName("Category1")).thenReturn(mockModelList);
+        when(mockModelService.getModelNameByCategoryName("Category1")).thenReturn(mockModelList);
 
-        List<ModelEntity> result = controller.getModelEntity("Category1");
+        List<ModelEntity> result = modelController.getModelEntityByCategory("Category1");
 
         assertEquals(mockModelList, result);
-        verify(service).getModelNameByCategoryName("Category1");
-        verifyNoMoreInteractions(service);
-        verifyNoMoreInteractions(repository);
+        verify(mockModelService).getModelNameByCategoryName("Category1");
+        verifyNoMoreInteractions(mockModelService);
+        verifyNoMoreInteractions(mockModelRepository);
     }
 
     @Test
-    void postModelEntity() {
-        ModelEntity mockModel = new ModelEntity("Model1", (short) 1);
+    void postModelEntityTest() {
+        ModelEntity mockModel = new ModelEntity(category, "Model1", (short) 1);
 
-        when(repository.save(mockModel)).thenReturn(mockModel);
+        when(mockModelRepository.save(mockModel)).thenReturn(mockModel);
 
-        ModelEntity result = controller.postModelEntity(mockModel);
+        ModelEntity result = modelController.postModelEntity(mockModel);
 
         assertEquals(mockModel, result);
-        verify(repository).save(mockModel);
-        verifyNoMoreInteractions(repository);
+        verify(mockModelRepository).save(mockModel);
+        verifyNoMoreInteractions(mockModelRepository);
     }
 
     @Test
-    void deleteModelEntity() {
-        ModelEntity mockModel = new ModelEntity("Model1", (short) 1);
+    void deleteCategoryEntityTest() {
+        ModelEntity mockModel = new ModelEntity(category, "Model1", (short) 1);
 
-        when(repository.findByModelName("Model1")).thenReturn(mockModel);
+        when(mockModelRepository.findByModelName("Model1")).thenReturn(mockModel);
 
-        String result = controller.deleteModelEntity("Model1");
+        ResponseEntity<Boolean> result = modelController.deleteModelEntity("Model1");
 
-        assertEquals("Model deleted", result);
-        verify(repository).findByModelName("Model1");
-        verify(repository).delete(mockModel);
-        verifyNoMoreInteractions(repository);
+        assertEquals(ResponseEntity.ok(true), result);
+        verify(mockModelRepository).findByModelName("Model1");
+        verify(mockModelRepository).delete(mockModel);
+        verifyNoMoreInteractions(mockModelRepository);
     }
 
     @Test
-    void updateModelEntity() {
-        ModelEntity mockModel = new ModelEntity("Model1", (short) 1);
+    void updateModelEntityTest() {
+        ModelEntity mockModel = new ModelEntity(category, "Model1", (short) 1);
 
-        when(repository.save(mockModel)).thenReturn(mockModel);
+        when(mockModelRepository.save(mockModel)).thenReturn(mockModel);
 
-        String result = controller.updateModelEntity(mockModel);
+        ModelEntity result = modelController.updateModelEntity(mockModel);
 
-        assertEquals("Model updated", result);
-        verify(repository).save(mockModel);
-        verifyNoMoreInteractions(repository);
+        assertEquals(mockModel, result);
+        verify(mockModelRepository).save(mockModel);
+        verifyNoMoreInteractions(mockModelRepository);
     }
 }

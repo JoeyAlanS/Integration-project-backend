@@ -22,6 +22,11 @@ public class CategoryEntity implements Serializable {
     public CategoryEntity() {
     }
 
+    public CategoryEntity(String categoryName, short id) {
+        this.categoryName = categoryName;
+        this.id = id;
+    }
+
     public String getLine() {
         return line.getLineName();
     }

@@ -18,6 +18,11 @@ public class LineupEntity implements Serializable {
     public LineupEntity() {
     }
 
+    public LineupEntity(String lineName, Short id) {
+        this.lineName = lineName;
+        this.id = id;
+    }
+
     public Short getId() {
         return id;
     }

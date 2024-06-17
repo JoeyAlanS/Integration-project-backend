@@ -1,6 +1,7 @@
 package com.eletra.controllers;
 
 import com.eletra.models.CategoryEntity;
+import com.eletra.models.LineupEntity;
 import com.eletra.repositories.CategoryRepository;
 import com.eletra.services.CategoryService;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,9 +9,11 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -20,13 +23,13 @@ import static org.mockito.Mockito.*;
 class CategoryControllerTest {
 
     @InjectMocks
-    private CategoryController controller;
+    private CategoryController categoryController;
 
     @Mock
-    private CategoryRepository repository;
+    private CategoryRepository mockCategoryRepository;
 
     @Mock
-    private CategoryService service;
+    private CategoryService mockCategoryService;
 
     @BeforeEach
     void setUp() {
@@ -34,64 +37,75 @@ class CategoryControllerTest {
     }
 
     @Test
-    void getCategoryEntityList() {
-        List<Category> mockCategoryList = Collections.singletonList(new Category("Category1", (short) 1));
-        when(repository.findAll()).thenReturn(mockCategoryList);
+    void getCategoryEntityListTest() {
+        List<CategoryEntity> mockCategoryList = new ArrayList<>();
+        mockCategoryList.add(new CategoryEntity("Category1", (short) 1));
+        mockCategoryList.add(new CategoryEntity("Category2", (short) 2));
 
-        List<Category> result = controller.getCategoryEntityList();
+        when(mockCategoryRepository.findAll()).thenReturn(mockCategoryList);
+
+        List<CategoryEntity> result = categoryController.getCategoryEntityList();
 
         assertEquals(mockCategoryList, result);
-        verify(repository).findAll();
-        verifyNoMoreInteractions(repository);
+        verify(mockCategoryRepository).findAll();
+        verifyNoMoreInteractions(mockCategoryRepository);
     }
 
     @Test
-    void getCategoriesByLine() {
-        List<Category> mockCategoryList = Collections.singletonList(new Category("Category1", (short) 1));
-        when(service.getCategoriesByLineName("Line")).thenReturn(mockCategoryList);
+    void getCategoryEntityListByLineNameTest() {
+        List<CategoryEntity> mockCategoryList = new ArrayList<>();
+        mockCategoryList.add(new CategoryEntity("Category1", (short) 1));
+        mockCategoryList.add(new CategoryEntity("Category2", (short) 2));
+        LineupEntity line = new LineupEntity("Line", (short) 1);
 
-        List<Category> result = controller.getCategoriesByLine("Line");
+        when(mockCategoryService.getCategoriesByLineName("Line")).thenReturn(mockCategoryList);
+
+        List<CategoryEntity> result = categoryController.getCategoriesByLine("Line");
 
         assertEquals(mockCategoryList, result);
-        verify(service).getCategoriesByLineName("Line");
-        verifyNoMoreInteractions(service);
-        verifyNoMoreInteractions(repository);
+        verify(mockCategoryService).getCategoriesByLineName("Line");
+        verifyNoMoreInteractions(mockCategoryService);
+        verifyNoMoreInteractions(mockCategoryRepository);
     }
 
     @Test
-    void postCategoryEntity() {
-        Category mockCategory = new Category("Category1", (short) 1);
-        when(repository.save(mockCategory)).thenReturn(mockCategory);
+    void postCategoryEntityTest() {
+        CategoryEntity mockCategory = new CategoryEntity("Category1", (short) 1);
 
-        Category result = controller.postCategoryEntity(mockCategory);
+        when(mockCategoryRepository.save(mockCategory)).thenReturn(mockCategory);
+
+        CategoryEntity result = categoryController.postCategoryEntity(mockCategory);
 
         assertEquals(mockCategory, result);
-        verify(repository).save(mockCategory);
-        verifyNoMoreInteractions(repository);
+        verify(mockCategoryRepository).save(mockCategory);
+        verifyNoMoreInteractions(mockCategoryRepository);
     }
 
     @Test
-    void deleteCategoryEntity() {
-        Category mockCategory = new Category("Category1", (short) 1);
-        when(repository.findByCategoryName("Category1")).thenReturn(mockCategory);
+    void deleteCategoryEntityTest() {
+        CategoryEntity mockCategory = new CategoryEntity("Category1", (short) 1);
 
-        String result = controller.deleteCategoryEntity("Category1");
+        when(mockCategoryRepository.findByCategoryName("NonExistentCategory")).thenReturn(null);
 
-        assertEquals("Category deleted", result);
-        verify(repository).findByCategoryName("Category1");
-        verify(repository).delete(mockCategory);
-        verifyNoMoreInteractions(repository);
+        ResponseEntity<Boolean> result = categoryController.deleteCategoryEntity("NonExistentCategory");
+
+        assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
+        assertEquals(false, result.getBody());
+
+        verify(mockCategoryRepository, times(1)).findByCategoryName("NonExistentCategory");
+        verifyNoMoreInteractions(mockCategoryRepository);
     }
 
     @Test
-    void updateCategoryEntity() {
-        Category mockCategory = new Category("Category1", (short) 1);
-        when(repository.save(mockCategory)).thenReturn(mockCategory);
+    void updateCategoryEntityTest() {
+        CategoryEntity mockCategory = new CategoryEntity("Category1", (short) 1);
 
-        String result = controller.updateCategoryEntity(mockCategory);
+        when(mockCategoryRepository.save(mockCategory)).thenReturn(mockCategory);
 
-        assertEquals("Category updated", result);
-        verify(repository).save(mockCategory);
-        verifyNoMoreInteractions(repository);
+        CategoryEntity result = categoryController.updateCategoryEntity(mockCategory);
+
+        assertEquals(mockCategory, result);
+        verify(mockCategoryRepository).save(mockCategory);
+        verifyNoMoreInteractions(mockCategoryRepository);
     }
 }

@@ -23,9 +23,10 @@ public class ModelEntity implements Serializable {
     public ModelEntity() {
     }
 
-    ModelEntity(CategoryEntity category, String modelName) {
+    public ModelEntity(CategoryEntity category, String modelName, Short id) {
         this.category = category;
         this.modelName = modelName;
+        this.id = id;
     }
 
     @Override

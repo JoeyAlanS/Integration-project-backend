@@ -1,8 +1,9 @@
 package com.eletra.repositories;
 
 import com.eletra.models.LineupEntity;
-import com.eletra.repositories.LineupRepository;
+import com.eletra.services.LineupService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -16,7 +17,7 @@ import static org.mockito.Mockito.*;
 class LineupRepositoryTest {
 
     @InjectMocks
-    private LineupRepository lineupRepository;
+    private LineupService lineupService;
 
     @Mock
     private LineupRepository mockLineupRepository;
@@ -27,25 +28,16 @@ class LineupRepositoryTest {
     }
 
     @Test
-    void findByLineName() {
-        Lineup mockLineup = new Lineup("Line1", (short) 1);
-        when(mockLineupRepository.findByLineName("Line1")).thenReturn(mockLineup);
+    @DisplayName("return lineup for given line name")
+    public void findByLineName() {
+        LineupEntity mockLineup = new LineupEntity("Ares", (short) 1);
+        when(mockLineupRepository.findByLineName(mockLineup.getLineName())).thenReturn(mockLineup);
 
-        Lineup result = lineupRepository.findByLineName("Line1");
+        Short result = lineupService.getLineIdByLineName(mockLineup.getLineName());
 
-        assertEquals(mockLineup, result);
-        verify(mockLineupRepository).findByLineName("Line1");
+        assertEquals(mockLineup.getId() , result);
+        verify(mockLineupRepository).findByLineName(mockLineup.getLineName());
         verifyNoMoreInteractions(mockLineupRepository);
     }
 
-    @Test
-    void delete() {
-        Lineup mockLineup = new Lineup("Line1", (short) 1);
-        when(mockLineupRepository.findByLineName("Line1")).thenReturn(mockLineup);
-
-        lineupRepository.delete(mockLineup);
-
-        verify(mockLineupRepository).delete(mockLineup);
-        verifyNoMoreInteractions(mockLineupRepository);
-    }
 }

@@ -1,13 +1,19 @@
 package com.eletra.repositories;
 
 import com.eletra.models.CategoryEntity;
-import com.eletra.repositories.CategoryRepository;
+import com.eletra.models.LineupEntity;
+import com.eletra.services.CategoryService;
+import com.eletra.services.LineupService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ActiveProfiles;
+
+import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -16,10 +22,13 @@ import static org.mockito.Mockito.*;
 public class CategoryRepositoryTest {
 
     @InjectMocks
-    private CategoryRepository categoryRepository;
+    private CategoryService categoryService;
 
     @Mock
     private CategoryRepository mockCategoryRepository;
+
+    @Mock
+    private LineupService mockLineupService;
 
     @BeforeEach
     public void setUp() {
@@ -27,37 +36,31 @@ public class CategoryRepositoryTest {
     }
 
     @Test
-    public void testFindByLineId() {
-        Category mockCategory = new Category("Category1", (short) 1);
-        when(mockCategoryRepository.findByLineId(1)).thenReturn(Collections.singletonList(mockCategory));
+    @DisplayName("return categories associated with a lineup name")
+    public void searchCategoriesByLineNameTest() {
+        LineupEntity mockLine = new LineupEntity("Line1" , (short) 1);
+        CategoryEntity mockCategory = new CategoryEntity("AresTB" , (short) 1);
+        when(mockCategoryRepository.findByLineId(mockLine.getId())).thenReturn(Collections.singletonList(mockCategory));
+        when(mockLineupService.getLineIdByLineName(mockLine.getLineName())).thenReturn(mockLine.getId());
 
-        List<Category> result = categoryRepository.findByLineId(1);
+        List<CategoryEntity> result = categoryService.getCategoriesByLineName(mockLine.getLineName());
 
         assertEquals(Collections.singletonList(mockCategory), result);
-        verify(mockCategoryRepository).findByLineId(1);
+        verify(mockCategoryRepository).findByLineId(mockLine.getId());
         verifyNoMoreInteractions(mockCategoryRepository);
     }
 
     @Test
-    public void testFindByCategoryName() {
-        Category mockCategory = new Category("Category1", (short) 1);
-        when(mockCategoryRepository.findByCategoryName("Category1")).thenReturn(mockCategory);
+    @DisplayName("return category ID by its name")
+    public void searchCategoryIdByCategoryNameTest() {
+        CategoryEntity mockCategory = new CategoryEntity("AresTB", (short) 1);
+        when(mockCategoryRepository.findByCategoryName(mockCategory.getCategoryName())).thenReturn(mockCategory);
 
-        Category result = categoryRepository.findByCategoryName("Category1");
+        Short result = categoryService.getCategoryIdByCategoryName(mockCategory.getCategoryName());
 
-        assertEquals(mockCategory, result);
-        verify(mockCategoryRepository).findByCategoryName("Category1");
+        assertEquals(mockCategory.getId() , result);
+        verify(mockCategoryRepository).findByCategoryName(mockCategory.getCategoryName());
         verifyNoMoreInteractions(mockCategoryRepository);
     }
 
-    @Test
-    public void testDelete() {
-        Category mockCategory = new Category("Category1", (short) 1);
-        when(mockCategoryRepository.findByCategoryName("Category1")).thenReturn(mockCategory);
-
-        categoryRepository.delete(mockCategory);
-
-        verify(mockCategoryRepository).delete(mockCategory);
-        verifyNoMoreInteractions(mockCategoryRepository);
-    }
 }
