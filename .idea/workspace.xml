@@ -6,16 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="ba607ed4-a6a6-401c-8ef5-eb47818f0d6c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eletra/models/CategoryEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/eletra/models/CategoryEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eletra/models/LineupEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/eletra/models/LineupEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eletra/models/ModelEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/eletra/models/ModelEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/eletra/controllers/CategoryControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/eletra/controllers/CategoryControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/eletra/controllers/LineupControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/eletra/controllers/LineupControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/eletra/controllers/ModelControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/eletra/controllers/ModelControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/eletra/repositories/CategoryRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/eletra/repositories/CategoryRepositoryTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/eletra/repositories/LineupRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/eletra/repositories/LineupRepositoryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/eletra/repositories/ModelRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/eletra/repositories/ModelRepositoryTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,9 +146,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.CategoryControllerTest.deleteCategoryEntityTest" />
-        <item itemvalue="JUnit.CategoryRepositoryTest" />
         <item itemvalue="JUnit.CategoryRepositoryTest.searchCategoriesByLineNameTest" />
+        <item itemvalue="JUnit.CategoryRepositoryTest" />
+        <item itemvalue="JUnit.CategoryControllerTest.deleteCategoryEntityTest" />
       </list>
     </recent_temporary>
   </component>
@@ -198,6 +190,8 @@
       <workItem from="1718389428613" duration="72000" />
       <workItem from="1718391597947" duration="3459000" />
       <workItem from="1718631324441" duration="2997000" />
+      <workItem from="1718651081354" duration="1305000" />
+      <workItem from="1718709504260" duration="1489000" />
     </task>
     <servers />
   </component>

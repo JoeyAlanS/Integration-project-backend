@@ -38,8 +38,8 @@ public class CategoryRepositoryTest {
     @Test
     @DisplayName("return categories associated with a lineup name")
     public void searchCategoriesByLineNameTest() {
-        LineupEntity mockLine = new LineupEntity("Line1" , (short) 1);
-        CategoryEntity mockCategory = new CategoryEntity("AresTB" , (short) 1);
+        LineupEntity mockLine = new LineupEntity("Line1", (short) 1);
+        CategoryEntity mockCategory = new CategoryEntity("AresTB", (short) 1);
         when(mockCategoryRepository.findByLineId(mockLine.getId())).thenReturn(Collections.singletonList(mockCategory));
         when(mockLineupService.getLineIdByLineName(mockLine.getLineName())).thenReturn(mockLine.getId());
 
@@ -58,7 +58,7 @@ public class CategoryRepositoryTest {
 
         Short result = categoryService.getCategoryIdByCategoryName(mockCategory.getCategoryName());
 
-        assertEquals(mockCategory.getId() , result);
+        assertEquals(mockCategory.getId(), result);
         verify(mockCategoryRepository).findByCategoryName(mockCategory.getCategoryName());
         verifyNoMoreInteractions(mockCategoryRepository);
     }

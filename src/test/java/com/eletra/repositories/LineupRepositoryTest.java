@@ -35,7 +35,7 @@ class LineupRepositoryTest {
 
         Short result = lineupService.getLineIdByLineName(mockLineup.getLineName());
 
-        assertEquals(mockLineup.getId() , result);
+        assertEquals(mockLineup.getId(), result);
         verify(mockLineupRepository).findByLineName(mockLineup.getLineName());
         verifyNoMoreInteractions(mockLineupRepository);
     }
