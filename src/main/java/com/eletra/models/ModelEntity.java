@@ -28,7 +28,6 @@ public class ModelEntity implements Serializable {
         this.modelName = modelName;
         this.id = id;
     }
-
     @Override
     public String toString() {
         return modelName;

@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba607ed4-a6a6-401c-8ef5-eb47818f0d6c" name="Changes" comment="" />
+    <list default="true" id="ba607ed4-a6a6-401c-8ef5-eb47818f0d6c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/eletra/models/ModelEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/eletra/models/ModelEntity.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,42 +35,42 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;JUnit.CategoryControllerTest.deleteCategoryEntityTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CategoryControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CategoryRepositoryTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CategoryRepositoryTest.searchCategoriesByLineNameTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LineupControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LineupRepositoryTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ModelControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ModelRepositoryTest.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Integration-Project-Backend [clean...].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Integration-Project-Backend [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Integration-Project-Backend [install].executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.Main.executor&quot;: &quot;Run&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit3&quot;: &quot;junit.framework.TestCase&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Feature__part__5&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JUnit.CategoryControllerTest.deleteCategoryEntityTest.executor": "Run",
+    "JUnit.CategoryControllerTest.executor": "Run",
+    "JUnit.CategoryRepositoryTest.executor": "Run",
+    "JUnit.CategoryRepositoryTest.searchCategoriesByLineNameTest.executor": "Run",
+    "JUnit.LineupControllerTest.executor": "Run",
+    "JUnit.LineupRepositoryTest.executor": "Run",
+    "JUnit.ModelControllerTest.executor": "Run",
+    "JUnit.ModelRepositoryTest.executor": "Run",
+    "Maven.Integration-Project-Backend [clean...].executor": "Run",
+    "Maven.Integration-Project-Backend [clean].executor": "Run",
+    "Maven.Integration-Project-Backend [install].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.Main.executor": "Run",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit3": "junit.framework.TestCase",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "Feature__05",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -85,7 +87,7 @@
       <command value="mvn clean package" />
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.CategoryControllerTest.deleteCategoryEntityTest">
     <configuration name="CategoryControllerTest.deleteCategoryEntityTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Integration-Project-Backend" />
       <extension name="coverage">
@@ -188,6 +190,7 @@
       <workItem from="1718631324441" duration="2997000" />
       <workItem from="1718651081354" duration="1305000" />
       <workItem from="1718709504260" duration="2188000" />
+      <workItem from="1718738984414" duration="408000" />
     </task>
     <servers />
   </component>
