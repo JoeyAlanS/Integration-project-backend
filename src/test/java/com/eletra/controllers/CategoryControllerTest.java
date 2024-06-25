@@ -1,7 +1,6 @@
 package com.eletra.controllers;
 
 import com.eletra.models.CategoryEntity;
-import com.eletra.models.LineupEntity;
 import com.eletra.repositories.CategoryRepository;
 import com.eletra.services.CategoryService;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,7 +36,7 @@ class CategoryControllerTest {
     }
 
     @Test
-    void getCategoryEntityListTest() {
+    public void getCategoryEntityListTest() {
         List<CategoryEntity> mockCategoryList = new ArrayList<>();
         mockCategoryList.add(new CategoryEntity("Category1", (short) 1));
         mockCategoryList.add(new CategoryEntity("Category2", (short) 2));
@@ -52,11 +51,8 @@ class CategoryControllerTest {
     }
 
     @Test
-    void getCategoryEntityListByLineNameTest() {
+    public void getCategoryEntityListByLineNameTest() {
         List<CategoryEntity> mockCategoryList = new ArrayList<>();
-        mockCategoryList.add(new CategoryEntity("Category1", (short) 1));
-        mockCategoryList.add(new CategoryEntity("Category2", (short) 2));
-        LineupEntity line = new LineupEntity("Line", (short) 1);
 
         when(mockCategoryService.getCategoriesByLineName("Line")).thenReturn(mockCategoryList);
 
@@ -69,7 +65,7 @@ class CategoryControllerTest {
     }
 
     @Test
-    void postCategoryEntityTest() {
+    public void postCategoryEntityTest() {
         CategoryEntity mockCategory = new CategoryEntity("Category1", (short) 1);
 
         when(mockCategoryRepository.save(mockCategory)).thenReturn(mockCategory);
@@ -82,9 +78,27 @@ class CategoryControllerTest {
     }
 
     @Test
-    void deleteCategoryEntityTest() {
+    public void deleteCategoryEntityTest() {
         CategoryEntity mockCategory = new CategoryEntity("Category1", (short) 1);
 
+        when(mockCategoryRepository.findByCategoryName("Category1"))
+                .thenReturn(mockCategory)
+                .thenReturn(null);
+
+        doNothing().when(mockCategoryRepository).delete(mockCategory);
+
+        ResponseEntity<Boolean> result = categoryController.deleteCategoryEntity("Category1");
+
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+        assertEquals(true, result.getBody());
+
+        verify(mockCategoryRepository, times(2)).findByCategoryName("Category1");
+        verify(mockCategoryRepository, times(1)).delete(mockCategory);
+        verifyNoMoreInteractions(mockCategoryRepository);
+    }
+
+    @Test
+    public void deleteCategoryEntityWhenNotExistsTest() {
         when(mockCategoryRepository.findByCategoryName("NonExistentCategory")).thenReturn(null);
 
         ResponseEntity<Boolean> result = categoryController.deleteCategoryEntity("NonExistentCategory");
@@ -96,8 +110,9 @@ class CategoryControllerTest {
         verifyNoMoreInteractions(mockCategoryRepository);
     }
 
+
     @Test
-    void updateCategoryEntityTest() {
+    public void updateCategoryEntityTest() {
         CategoryEntity mockCategory = new CategoryEntity("Category1", (short) 1);
 
         when(mockCategoryRepository.save(mockCategory)).thenReturn(mockCategory);

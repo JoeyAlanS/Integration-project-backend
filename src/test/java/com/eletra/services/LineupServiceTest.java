@@ -1,6 +1,7 @@
-package com.eletra.repositories;
+package com.eletra.services;
 
 import com.eletra.models.LineupEntity;
+import com.eletra.repositories.LineupRepository;
 import com.eletra.services.LineupService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -14,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ActiveProfiles("test")
-class LineupRepositoryTest {
+public class LineupServiceTest {
 
     @InjectMocks
     private LineupService lineupService;

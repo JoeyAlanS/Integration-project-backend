@@ -1,9 +1,8 @@
-package com.eletra.repositories;
+package com.eletra.services;
 
 import com.eletra.models.CategoryEntity;
 import com.eletra.models.ModelEntity;
-import com.eletra.services.CategoryService;
-import com.eletra.services.ModelService;
+import com.eletra.repositories.ModelRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ActiveProfiles("test")
-class ModelRepositoryTest {
+public class ModelServiceTest {
 
     @InjectMocks
     private ModelService modelService;

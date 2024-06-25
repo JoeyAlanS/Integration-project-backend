@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -31,7 +32,7 @@ class LineupControllerTest {
     }
 
     @Test
-    void getLineupEntityListTest() {
+    public void getLineupEntityListTest() {
         List<LineupEntity> mockLineList = new ArrayList<>();
         mockLineList.add(new LineupEntity("Line1", (short) 1));
         mockLineList.add(new LineupEntity("Line2", (short) 2));
@@ -46,7 +47,7 @@ class LineupControllerTest {
     }
 
     @Test
-    void getLineupEntityTest() {
+    public void getLineupEntityTest() {
         LineupEntity mockLine = new LineupEntity("Line1", (short) 1);
 
         when(mockLineupRepository.findByLineName("Line1")).thenReturn(mockLine);
@@ -59,7 +60,7 @@ class LineupControllerTest {
     }
 
     @Test
-    void postLineupEntityTest() {
+    public void postLineupEntityTest() {
         LineupEntity mockLine = new LineupEntity("line1", (short) 1);
 
         when(mockLineupRepository.save(mockLine)).thenReturn(mockLine);
@@ -72,10 +73,23 @@ class LineupControllerTest {
     }
 
     @Test
-    void deleteLineupEntityTest() {
+    public void deleteLineupEntityWhenNotExistsTest() {
+        when(mockLineupRepository.findByLineName("NonExistentLine")).thenReturn(null);
+
+        ResponseEntity<Boolean> result = lineupController.deleteLineupEntity("NonExistentLine");
+
+        assertEquals(ResponseEntity.status(HttpStatus.NOT_FOUND).body(false), result);
+        verify(mockLineupRepository).findByLineName("NonExistentLine");
+        verifyNoMoreInteractions(mockLineupRepository);
+    }
+
+    @Test
+    public void deleteLineupEntityTest() {
         LineupEntity mockLine = new LineupEntity("Line1", (short) 1);
 
-        when(mockLineupRepository.findByLineName("Line1")).thenReturn(mockLine).thenReturn(null);
+        when(mockLineupRepository.findByLineName("Line1"))
+                .thenReturn(mockLine)
+                .thenReturn(null);
         doNothing().when(mockLineupRepository).delete(mockLine);
 
         ResponseEntity<Boolean> result = lineupController.deleteLineupEntity("Line1");
@@ -86,9 +100,8 @@ class LineupControllerTest {
         verifyNoMoreInteractions(mockLineupRepository);
     }
 
-
     @Test
-    void putLineupEntityTest() {
+    public void putLineupEntityTest() {
         LineupEntity mockLine = new LineupEntity("Line1", (short) 1);
 
         when(mockLineupRepository.save(mockLine)).thenReturn(mockLine);

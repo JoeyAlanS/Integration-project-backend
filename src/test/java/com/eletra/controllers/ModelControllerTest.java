@@ -40,7 +40,7 @@ class ModelControllerTest {
     }
 
     @Test
-    void getModelEntityListTest() {
+    public void getModelEntityListTest() {
         List<ModelEntity> mockModelList = new ArrayList<>();
         mockModelList.add(new ModelEntity(category, "Model1", (short) 1));
         mockModelList.add(new ModelEntity(category, "Model2", (short) 2));
@@ -55,7 +55,7 @@ class ModelControllerTest {
     }
 
     @Test
-    void getModelEntityListByLineNameTest() {
+    public void getModelEntityListByLineNameTest() {
         List<ModelEntity> mockModelList = new ArrayList<>();
         mockModelList.add(new ModelEntity(category, "Model1", (short) 1));
         mockModelList.add(new ModelEntity(category, "Model2", (short) 2));
@@ -71,7 +71,7 @@ class ModelControllerTest {
     }
 
     @Test
-    void postModelEntityTest() {
+    public void postModelEntityTest() {
         ModelEntity mockModel = new ModelEntity(category, "Model1", (short) 1);
 
         when(mockModelRepository.save(mockModel)).thenReturn(mockModel);
@@ -84,7 +84,18 @@ class ModelControllerTest {
     }
 
     @Test
-    void deleteCategoryEntityTest() {
+    public void deleteModelEntityWhenNotExistsTest() {
+        when(mockModelRepository.findByModelName("NonExistentModel")).thenReturn(null);
+
+        ResponseEntity<Boolean> result = modelController.deleteModelEntity("NonExistentModel");
+
+        assertEquals(ResponseEntity.ok(false), result);
+        verify(mockModelRepository).findByModelName("NonExistentModel");
+        verifyNoMoreInteractions(mockModelRepository);
+    }
+
+    @Test
+    public void deleteModelEntityTest() {
         ModelEntity mockModel = new ModelEntity(category, "Model1", (short) 1);
 
         when(mockModelRepository.findByModelName("Model1")).thenReturn(mockModel);
@@ -97,8 +108,9 @@ class ModelControllerTest {
         verifyNoMoreInteractions(mockModelRepository);
     }
 
+
     @Test
-    void updateModelEntityTest() {
+    public void updateModelEntityTest() {
         ModelEntity mockModel = new ModelEntity(category, "Model1", (short) 1);
 
         when(mockModelRepository.save(mockModel)).thenReturn(mockModel);
