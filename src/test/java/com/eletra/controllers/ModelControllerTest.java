@@ -4,6 +4,8 @@ import com.eletra.models.ModelEntity;
 import com.eletra.models.CategoryEntity;
 import com.eletra.services.ModelService;
 import com.eletra.repositories.ModelRepository;
+import org.aspectj.lang.annotation.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,6 +39,11 @@ class ModelControllerTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
         category = new CategoryEntity("Category1", (short) 1);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        clearInvocations(mockModelRepository);
     }
 
     @Test

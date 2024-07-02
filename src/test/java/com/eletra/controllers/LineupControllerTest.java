@@ -2,6 +2,7 @@ package com.eletra.controllers;
 
 import com.eletra.models.LineupEntity;
 import com.eletra.repositories.LineupRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -30,6 +31,12 @@ class LineupControllerTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
     }
+
+    @AfterEach
+    public void tearDown() {
+        clearInvocations(mockLineupRepository);
+    }
+
 
     @Test
     public void getLineupEntityListTest() {
@@ -87,9 +94,7 @@ class LineupControllerTest {
     public void deleteLineupEntityTest() {
         LineupEntity mockLine = new LineupEntity("Line1", (short) 1);
 
-        when(mockLineupRepository.findByLineName("Line1"))
-                .thenReturn(mockLine)
-                .thenReturn(null);
+        when(mockLineupRepository.findByLineName("Line1")).thenReturn(mockLine);
         doNothing().when(mockLineupRepository).delete(mockLine);
 
         ResponseEntity<Boolean> result = lineupController.deleteLineupEntity("Line1");

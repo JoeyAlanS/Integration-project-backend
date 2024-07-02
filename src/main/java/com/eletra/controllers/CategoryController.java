@@ -52,8 +52,7 @@ public class CategoryController {
         CategoryEntity categoryEntity = categoryRepository.findByCategoryName(categoryName);
         if (categoryEntity != null) {
             categoryRepository.delete(categoryEntity);
-            boolean exists = categoryRepository.findByCategoryName(categoryName) != null;
-            return ResponseEntity.ok(!exists);
+            return ResponseEntity.ok(true);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
     }

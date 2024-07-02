@@ -48,8 +48,7 @@ public class LineupController {
         LineupEntity lineupEntity = lineupRepository.findByLineName(lineName);
         if (lineupEntity != null) {
             lineupRepository.delete(lineupEntity);
-            boolean exists = lineupRepository.findByLineName(lineName) != null;
-            return ResponseEntity.ok(!exists);
+            return ResponseEntity.ok(true);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
     }

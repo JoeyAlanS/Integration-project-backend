@@ -3,6 +3,7 @@ package com.eletra.controllers;
 import com.eletra.models.CategoryEntity;
 import com.eletra.repositories.CategoryRepository;
 import com.eletra.services.CategoryService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -33,6 +34,11 @@ class CategoryControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        clearInvocations(mockCategoryRepository, mockCategoryService);
     }
 
     @Test
@@ -81,10 +87,7 @@ class CategoryControllerTest {
     public void deleteCategoryEntityTest() {
         CategoryEntity mockCategory = new CategoryEntity("Category1", (short) 1);
 
-        when(mockCategoryRepository.findByCategoryName("Category1"))
-                .thenReturn(mockCategory)
-                .thenReturn(null);
-
+        when(mockCategoryRepository.findByCategoryName("Category1")).thenReturn(mockCategory);
         doNothing().when(mockCategoryRepository).delete(mockCategory);
 
         ResponseEntity<Boolean> result = categoryController.deleteCategoryEntity("Category1");
@@ -92,8 +95,8 @@ class CategoryControllerTest {
         assertEquals(HttpStatus.OK, result.getStatusCode());
         assertEquals(true, result.getBody());
 
-        verify(mockCategoryRepository, times(2)).findByCategoryName("Category1");
-        verify(mockCategoryRepository, times(1)).delete(mockCategory);
+        verify(mockCategoryRepository).findByCategoryName("Category1");
+        verify(mockCategoryRepository).delete(mockCategory);
         verifyNoMoreInteractions(mockCategoryRepository);
     }
 
