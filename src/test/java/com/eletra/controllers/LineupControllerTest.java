@@ -37,17 +37,18 @@ class LineupControllerTest {
         clearInvocations(mockLineupRepository);
     }
 
-
     @Test
     public void getLineupEntityListTest() {
+        // Given
         List<LineupEntity> mockLineList = new ArrayList<>();
         mockLineList.add(new LineupEntity("Line1", (short) 1));
         mockLineList.add(new LineupEntity("Line2", (short) 2));
-
         when(mockLineupRepository.findAll()).thenReturn(mockLineList);
 
+        // When
         List<LineupEntity> result = lineupController.getLineupEntityList();
 
+        // Then
         assertEquals(mockLineList, result);
         verify(mockLineupRepository).findAll();
         verifyNoMoreInteractions(mockLineupRepository);
@@ -55,12 +56,14 @@ class LineupControllerTest {
 
     @Test
     public void getLineupEntityTest() {
+        // Given
         LineupEntity mockLine = new LineupEntity("Line1", (short) 1);
-
         when(mockLineupRepository.findByLineName("Line1")).thenReturn(mockLine);
 
+        // When
         LineupEntity result = lineupController.getLineupEntity("Line1");
 
+        // Then
         assertEquals(mockLine, result);
         verify(mockLineupRepository).findByLineName("Line1");
         verifyNoMoreInteractions(mockLineupRepository);
@@ -68,12 +71,14 @@ class LineupControllerTest {
 
     @Test
     public void postLineupEntityTest() {
+        // Given
         LineupEntity mockLine = new LineupEntity("line1", (short) 1);
-
         when(mockLineupRepository.save(mockLine)).thenReturn(mockLine);
 
+        // When
         LineupEntity result = lineupController.postLineupEntity(mockLine);
 
+        // Then
         assertEquals(mockLine, result);
         verify(mockLineupRepository).save(mockLine);
         verifyNoMoreInteractions(mockLineupRepository);
@@ -81,10 +86,13 @@ class LineupControllerTest {
 
     @Test
     public void deleteLineupEntityWhenNotExistsTest() {
+        // Given
         when(mockLineupRepository.findByLineName("NonExistentLine")).thenReturn(null);
 
+        // When
         ResponseEntity<Boolean> result = lineupController.deleteLineupEntity("NonExistentLine");
 
+        // Then
         assertEquals(ResponseEntity.status(HttpStatus.NOT_FOUND).body(false), result);
         verify(mockLineupRepository).findByLineName("NonExistentLine");
         verifyNoMoreInteractions(mockLineupRepository);
@@ -92,27 +100,31 @@ class LineupControllerTest {
 
     @Test
     public void deleteLineupEntityTest() {
+        // Given
         LineupEntity mockLine = new LineupEntity("Line1", (short) 1);
-
         when(mockLineupRepository.findByLineName("Line1")).thenReturn(mockLine);
         doNothing().when(mockLineupRepository).delete(mockLine);
 
+        // When
         ResponseEntity<Boolean> result = lineupController.deleteLineupEntity("Line1");
 
+        // Then
         assertEquals(ResponseEntity.ok(true), result);
-        verify(mockLineupRepository, times(2)).findByLineName("Line1");
+        verify(mockLineupRepository).findByLineName("Line1");
         verify(mockLineupRepository).delete(mockLine);
         verifyNoMoreInteractions(mockLineupRepository);
     }
 
     @Test
     public void putLineupEntityTest() {
+        // Given
         LineupEntity mockLine = new LineupEntity("Line1", (short) 1);
-
         when(mockLineupRepository.save(mockLine)).thenReturn(mockLine);
 
+        // When
         LineupEntity result = lineupController.updateLineupyEntity(mockLine);
 
+        // Then
         assertEquals(mockLine, result);
         verify(mockLineupRepository).save(mockLine);
         verifyNoMoreInteractions(mockLineupRepository);

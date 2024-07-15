@@ -2,7 +2,6 @@ package com.eletra.services;
 
 import com.eletra.models.LineupEntity;
 import com.eletra.repositories.LineupRepository;
-import com.eletra.services.LineupService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,11 +30,14 @@ public class LineupServiceTest {
     @Test
     @DisplayName("return lineup for given line name")
     public void findByLineName() {
+        //Given
         LineupEntity mockLineup = new LineupEntity("Ares", (short) 1);
         when(mockLineupRepository.findByLineName(mockLineup.getLineName())).thenReturn(mockLineup);
 
+        //When
         Short result = lineupService.getLineIdByLineName(mockLineup.getLineName());
 
+        //Then
         assertEquals(mockLineup.getId(), result);
         verify(mockLineupRepository).findByLineName(mockLineup.getLineName());
         verifyNoMoreInteractions(mockLineupRepository);

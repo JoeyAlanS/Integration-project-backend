@@ -43,14 +43,16 @@ class CategoryControllerTest {
 
     @Test
     public void getCategoryEntityListTest() {
+        // Given
         List<CategoryEntity> mockCategoryList = new ArrayList<>();
         mockCategoryList.add(new CategoryEntity("Category1", (short) 1));
         mockCategoryList.add(new CategoryEntity("Category2", (short) 2));
-
         when(mockCategoryRepository.findAll()).thenReturn(mockCategoryList);
 
+        // When
         List<CategoryEntity> result = categoryController.getCategoryEntityList();
 
+        // Then
         assertEquals(mockCategoryList, result);
         verify(mockCategoryRepository).findAll();
         verifyNoMoreInteractions(mockCategoryRepository);
@@ -58,12 +60,14 @@ class CategoryControllerTest {
 
     @Test
     public void getCategoryEntityListByLineNameTest() {
+        // Given
         List<CategoryEntity> mockCategoryList = new ArrayList<>();
-
         when(mockCategoryService.getCategoriesByLineName("Line")).thenReturn(mockCategoryList);
 
+        // When
         List<CategoryEntity> result = categoryController.getCategoriesByLine("Line");
 
+        // Then
         assertEquals(mockCategoryList, result);
         verify(mockCategoryService).getCategoriesByLineName("Line");
         verifyNoMoreInteractions(mockCategoryService);
@@ -72,12 +76,14 @@ class CategoryControllerTest {
 
     @Test
     public void postCategoryEntityTest() {
+        // Given
         CategoryEntity mockCategory = new CategoryEntity("Category1", (short) 1);
-
         when(mockCategoryRepository.save(mockCategory)).thenReturn(mockCategory);
 
+        // When
         CategoryEntity result = categoryController.postCategoryEntity(mockCategory);
 
+        // Then
         assertEquals(mockCategory, result);
         verify(mockCategoryRepository).save(mockCategory);
         verifyNoMoreInteractions(mockCategoryRepository);
@@ -85,16 +91,17 @@ class CategoryControllerTest {
 
     @Test
     public void deleteCategoryEntityTest() {
+        // Given
         CategoryEntity mockCategory = new CategoryEntity("Category1", (short) 1);
-
         when(mockCategoryRepository.findByCategoryName("Category1")).thenReturn(mockCategory);
         doNothing().when(mockCategoryRepository).delete(mockCategory);
 
+        // When
         ResponseEntity<Boolean> result = categoryController.deleteCategoryEntity("Category1");
 
+        // Then
         assertEquals(HttpStatus.OK, result.getStatusCode());
         assertEquals(true, result.getBody());
-
         verify(mockCategoryRepository).findByCategoryName("Category1");
         verify(mockCategoryRepository).delete(mockCategory);
         verifyNoMoreInteractions(mockCategoryRepository);
@@ -102,26 +109,29 @@ class CategoryControllerTest {
 
     @Test
     public void deleteCategoryEntityWhenNotExistsTest() {
+        // Given
         when(mockCategoryRepository.findByCategoryName("NonExistentCategory")).thenReturn(null);
 
+        // When
         ResponseEntity<Boolean> result = categoryController.deleteCategoryEntity("NonExistentCategory");
 
+        // Then
         assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
         assertEquals(false, result.getBody());
-
         verify(mockCategoryRepository, times(1)).findByCategoryName("NonExistentCategory");
         verifyNoMoreInteractions(mockCategoryRepository);
     }
 
-
     @Test
     public void updateCategoryEntityTest() {
+        // Given
         CategoryEntity mockCategory = new CategoryEntity("Category1", (short) 1);
-
         when(mockCategoryRepository.save(mockCategory)).thenReturn(mockCategory);
 
+        // When
         CategoryEntity result = categoryController.updateCategoryEntity(mockCategory);
 
+        // Then
         assertEquals(mockCategory, result);
         verify(mockCategoryRepository).save(mockCategory);
         verifyNoMoreInteractions(mockCategoryRepository);

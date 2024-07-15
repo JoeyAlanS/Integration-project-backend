@@ -40,13 +40,16 @@ public class ModelServiceTest {
     @Test
     @DisplayName("Should find models by category name")
     public void searchModelNameByCategoryNameTest() {
+        //Given
         ModelEntity mockModel = new ModelEntity(mockCategory, "Ares 7021", (short) 1);
 
         when(mockCategoryService.getCategoryIdByCategoryName(mockCategory.getCategoryName())).thenReturn(mockCategory.getId());
         when(mockModelRepository.findByCategoryId(mockCategory.getId())).thenReturn(Collections.singletonList(mockModel));
 
+        //When
         List<ModelEntity> result = modelService.getModelNameByCategoryName(mockCategory.getCategoryName());
 
+        //Then
         assertEquals(Collections.singletonList(mockModel), result);
         verify(mockModelRepository).findByCategoryId(mockCategory.getId());
         verifyNoMoreInteractions(mockModelRepository);
