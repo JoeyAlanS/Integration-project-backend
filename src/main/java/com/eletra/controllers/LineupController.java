@@ -56,7 +56,7 @@ public class LineupController {
     @PutMapping("/line")
     @ResponseBody
     @ApiOperation(value = "Update line")
-    public LineupEntity updateLineupyEntity(@RequestBody LineupEntity lineupEntity) {
+    public LineupEntity updateLineupEntity(@RequestBody LineupEntity lineupEntity) {
         return lineupRepository.save(lineupEntity);
     }
 }

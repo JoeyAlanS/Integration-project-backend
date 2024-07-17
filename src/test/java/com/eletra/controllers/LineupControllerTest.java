@@ -122,7 +122,7 @@ class LineupControllerTest {
         when(mockLineupRepository.save(mockLine)).thenReturn(mockLine);
 
         // When
-        LineupEntity result = lineupController.updateLineupyEntity(mockLine);
+        LineupEntity result = lineupController.updateLineupEntity(mockLine);
 
         // Then
         assertEquals(mockLine, result);
